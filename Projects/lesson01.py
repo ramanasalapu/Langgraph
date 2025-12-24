@@ -16,13 +16,19 @@ def hello_world_node(state: HelloWorldState):
     state['greeting']="Hello World, " +state['greeting']
     return state
 
+def exclamation_node(state: HelloWorldState):
+    state['greeting'] = "!"
+    return state
+
 # Initialise the graph and add the node
 builder =StateGraph(HelloWorldState)
 builder.add_node('greet', hello_world_node)
+builder.add_node('exclaim', exclamation_node)
 
 # add edges to graph network
 builder.add_edge(START, 'greet')
-builder.add_edge('greet', END)
+builder.add_edge('greet', 'exclaim')
+builder.add_edge('exclaim', END)
 
 #Compile and run the graph
 graph = builder.compile()
